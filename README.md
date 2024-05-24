@@ -6,9 +6,10 @@
 * HTTP and HTTPS ports opened
 
 ## Usage
-1. Run Docker compose
+1. Run Nextcloud Docker compose
 ```bash
 sudo docker compose up -d
+# Reference: https://github.com/nextcloud/all-in-one?tab=readme-ov-file#nextcloud-all-in-one
 ```
 
 
