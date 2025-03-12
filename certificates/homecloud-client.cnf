@@ -1,0 +1,3 @@
+[homecloudclient_extensions]
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature
