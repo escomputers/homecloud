@@ -62,7 +62,7 @@ sleep 3
 # Copy the archive to the S3 bucket with retry mechanism
 for ((attempt = 1; attempt <= MAX_RETRIES; attempt++)); do
     echo "Attempt $attempt: Uploading $FILENAME to $BACKUP_BUCKET"
-    if rclone copyto "$FILEPATH" s3-bucket:"$BACKUP_BUCKET/$FILENAME" --progress; then
+    if rclone copyto "$FILEPATH" s3-bucket:"$BACKUP_BUCKET/$FILENAME"; then
         echo "Upload successful on attempt $attempt"
         break
     else
