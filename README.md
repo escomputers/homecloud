@@ -107,20 +107,20 @@ crontab -e
 ## Restore files from S3 Deep Archive
 ```bash
 # List S3 objects with StorageClass Glacier Deep Archive
-aws s3api list-objects --bucket nextcloud-backups-personal-864430642600 | grep "StorageClass" | grep DEEP_ARCHIVE
+aws s3api list-objects --bucket <BUCKET_NAME> | grep "StorageClass" | grep DEEP_ARCHIVE
 
 # Change object StorageClass for 2 days from Deep Archive to Standard
 aws s3api restore-object \
-  --bucket nextcloud-backups-personal-864430642600 \
+  --bucket <BUCKET_NAME> \
   --key "borg_2025-03-11_22-50-21.tar.gz" \
   --restore-request '{"Days":2, "GlacierJobParameters": {"Tier": "Standard"}}'
 
 # Check restoration status
-aws s3api head-object --bucket nextcloud-backups-personal-864430642600 --key borg_2025-03-11_22-50-21.tar.gz
+aws s3api head-object --bucket <BUCKET_NAME> --key borg_2025-03-11_22-50-21.tar.gz
 
 # Misc
 # check S3 bucket usage
-aws s3 ls s3://nextcloud-backups-personal-864430642600 --recursive --human-readable --summarize
+aws s3 ls s3://<BUCKET_NAME> --recursive --human-readable --summarize
 ```
 
 ## Restore Nextcloud data into a new server
