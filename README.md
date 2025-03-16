@@ -32,7 +32,12 @@ Nextcloud uses BorgBackup as the underlying backup technology. By default, it se
 ### Server configuration
 1. Install required packages
 ```bash
-sudo apt update && sudo apt install -y awscli jq
+sudo apt update && sudo apt install -y jq unzip
+
+# Install awscli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 
 # Make sure to use the latest stable version of aws_signing_helper
 wget https://rolesanywhere.amazonaws.com/releases/1.4.0/X86_64/Linux/aws_signing_helper
@@ -124,4 +129,32 @@ aws s3 ls s3://<BUCKET_NAME> --recursive --human-readable --summarize
 ```
 
 ## Restore Nextcloud data into a new server
-1.
+Reference: https://github.com/nextcloud/all-in-one?tab=readme-ov-file#how-to-migrate-from-aio-to-aio
+
+1. Install a valid SSL certificate on the server:
+```bash
+# Make sure that no process is running on port 80
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot certonly --standalone
+```
+
+2. Once you've installed the new AIO Nextcloud instance, start the compose project and then go to https://yourdomain.com:8443/login
+
+3. Copy the tar.gz archive of the Borg repository into the new host. Then extract it and place it into a directory. The extracted directory name must be `borg`. E.g. `/mnt/borg`
+
+4. On AIO Nextcloud Interface webpage, select "Restore AIO instance":
+- enter the path of the extracted backup without specifying the directory name. E.g. if backup is placed at `/mnt/borg`, use: `/mnt`
+- enter Borg encryption password
+
+5. Change domain (if required)
+Reference: https://github.com/nextcloud/all-in-one?tab=readme-ov-file#how-to-change-the-domain
+```bash
+# Replace each occurrence of old domain with the new one inside configuration.json
+sudo docker run -it --rm --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config:rw alpine sh -c "apk add --no-cache nano && nano /mnt/docker-aio-config/data/configuration.json"
+
+'overwritehost' => 'newurl.com'
+'trusted_domains' => array (0 => 'localhost', 1 => 'newurl.com')
+'overwrite.cli.url' => 'https://newurl.com/'
+```
+After that, restart/start all Nextcloud containers and everything should work as expected
