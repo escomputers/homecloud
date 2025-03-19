@@ -1,7 +1,7 @@
 version: '3'
 services:
   netdata:
-    image: netdata/netdata
+    image: netdata/netdata:stable
     container_name: netdata
     pid: host
     network_mode: host
@@ -25,7 +25,8 @@ services:
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /run/dbus:/run/dbus:ro
-
+    environment:
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
 volumes:
   netdataconfig:
   netdatalib:
