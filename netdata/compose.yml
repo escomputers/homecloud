@@ -25,8 +25,11 @@ services:
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /run/dbus:/run/dbus:ro
+    # Edit CLAIM_TOKEN & CLAIM_ROOMS accordingly before proceeding
     environment:
       - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_TOKEN=<VALUE-FROM-NETDATA-CLOUD>
+      - NETDATA_CLAIM_ROOMS=<VALUE-FROM-NETDATA-CLOUD>
 volumes:
   netdataconfig:
   netdatalib:
