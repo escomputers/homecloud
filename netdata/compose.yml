@@ -25,6 +25,8 @@ services:
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /run/dbus:/run/dbus:ro
+      # Required for email notifications
+      - ./msmtprc:/etc/msmtprc:ro
     # Edit CLAIM_TOKEN & CLAIM_ROOMS accordingly before proceeding
     environment:
       - NETDATA_CLAIM_URL=https://app.netdata.cloud
