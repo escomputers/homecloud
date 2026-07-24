@@ -97,7 +97,7 @@ openssl x509 -req -in homecloud-client.csr -CA homecloud-root-ca.crt -CAkey home
 ### Backup configuration
 1. Change the [ENV file](homecloud_backup.env) according to your setup then:
 ```bash
-sudo mv homecloud_backup.env /etc/homecloud_backup.sh && sudo chmod 600 /etc/homecloud_backup.env
+sudo mv homecloud_backup.env /etc/homecloud_backup.env && sudo chmod 600 /etc/homecloud_backup.env
 
 sudo mv homecloud_backup.sh /usr/local/bin/homecloud_backup.sh && sudo chmod 644 /usr/local/bin/homecloud_backup.sh
 ```
